@@ -26,4 +26,13 @@ model Farm {
   total_vegetation_area_ha Decimal
   farmer_id                String
   farmer                   Farmer  @relation(fields: [farmer_id], references: [id])
+  Crop                     Crop[]
+}
+
+model Crop {
+  id           String @id @default(uuid())
+  crop_yr      Int
+  planted_crop String
+  farm_id      String
+  farm         Farm   @relation(fields: [farm_id], references: [id])
 }
