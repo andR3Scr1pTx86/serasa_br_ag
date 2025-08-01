@@ -1,0 +1,1 @@
+export const FARMER_REPOSITORY_TOKEN = 'FarmerRepository';
