@@ -8,9 +8,22 @@ datasource db {
 }
 
 model Farmer {
-  id  String @id @default(uuid())
-  document  String @unique
-  name  String
+  id        String   @id @default(uuid())
+  document  String   @unique
+  name      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Farm      Farm[]
+}
+
+model Farm {
+  id                       String  @id @default(uuid())
+  name                     String
+  city                     String
+  state                    String
+  total_area_ha            Decimal
+  total_arable_area_ha     Decimal
+  total_vegetation_area_ha Decimal
+  farmer_id                String
+  farmer                   Farmer  @relation(fields: [farmer_id], references: [id])
 }
