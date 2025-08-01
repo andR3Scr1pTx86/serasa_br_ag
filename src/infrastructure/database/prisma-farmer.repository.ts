@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 
 import { Farmer } from "@core/farmer/farmer";
 import { FarmerRepository } from "@core/farmer/farmer.repository";
+
 import { PrismaService } from "@prisma/prisma.service";
 
 @Injectable()
