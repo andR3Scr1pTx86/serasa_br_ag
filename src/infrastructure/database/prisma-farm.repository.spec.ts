@@ -49,6 +49,7 @@ describe('PrismaFarmRepository (Integration)', () => {
 
     it('should be defined', () => {
         expect(farmRepository).toBeDefined();
+        expect(farmerRepository).toBeDefined();
     });
 
     it('should find an existing farm in the database by id', async () => {
