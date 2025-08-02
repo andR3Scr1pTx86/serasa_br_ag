@@ -99,11 +99,7 @@ describe('FarmerService', () => {
             expect(result).toEqual(updatedFarmer)
 
             expect(mockFarmerRepository.findById).toHaveBeenCalledWith(existingFarmer.id)
-            expect(mockFarmerRepository.update).toHaveBeenCalledWith(new Farmer(
-                existingFarmer.id,
-                existingFarmer.document,
-                'João'
-            ))
+            expect(mockFarmerRepository.update).toHaveBeenCalledWith(updatedFarmer)
         })
 
         it('should throw NotFoundException if farmer already not exists', async () => {
@@ -132,6 +128,7 @@ describe('FarmerService', () => {
             await service.deleteFarmer(farmer.id)
 
             expect(mockFarmerRepository.findById).toHaveBeenCalledWith(farmer.id)
+            expect(mockFarmerRepository.delete).toHaveBeenCalled()
         })
 
         it('should throw NotFoundException if farmer already not exists', async () => {
