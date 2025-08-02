@@ -16,7 +16,7 @@ export class CropController {
 
     @Post()
     @ApiOperation({ summary: 'Create new crop' })
-    @ApiResponse({ status: 201, description: 'Crop created successfully' })
+    @ApiResponse({ status: 201, description: 'Crop created successfully', type: Crop })
     @ApiResponse({ status: 404, description: 'Resource not found' })
     async createCrop(@Body() createCropDto: CreateCropDto): Promise<Crop> {
         return this.cropService.createCrop(new Crop(
@@ -29,7 +29,7 @@ export class CropController {
 
     @Put(':id')
     @ApiOperation({ summary: 'Update crop' })
-    @ApiResponse({ status: 200, description: 'Crop updated successfully' })
+    @ApiResponse({ status: 200, description: 'Crop updated successfully', type: Crop })
     @ApiResponse({ status: 404, description: 'Resource not found' })
     async updateCrop(@Param('id') id: string, @Body() updateCropDto: UpdateCropDto): Promise<Crop> {
         return this.cropService.updateCrop(id, updateCropDto)

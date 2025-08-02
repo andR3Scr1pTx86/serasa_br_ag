@@ -16,7 +16,7 @@ export class FarmController {
 
     @Post()
     @ApiOperation({ summary: 'Create new farm' })
-    @ApiResponse({ status: 201, description: 'Farm created successfully' })
+    @ApiResponse({ status: 201, description: 'Farm created successfully', type: Farm })
     @ApiResponse({ status: 400, description: 'Invalid input data' })
     @ApiResponse({ status: 404, description: 'Resource not found' })
     async createFarm(@Body() createFarmDto: CreateFarmDto): Promise<Farm> {
@@ -34,7 +34,7 @@ export class FarmController {
 
     @Put(':id')
     @ApiOperation({ summary: 'Update farm' })
-    @ApiResponse({ status: 200, description: 'Farm updated successfully' })
+    @ApiResponse({ status: 200, description: 'Farm updated successfully', type: Farm })
     @ApiResponse({ status: 400, description: 'Invalid input data' })
     @ApiResponse({ status: 404, description: 'Resource not found' })
     async updateFarm(@Param('id') id: string, @Body() updateFarmDto: UpdateFarmDto): Promise<Farm> {

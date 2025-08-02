@@ -16,7 +16,7 @@ export class FarmerController {
 
     @Post()
     @ApiOperation({ summary: 'Create new farmer' })
-    @ApiResponse({ status: 201, description: 'Farmer created successfully' })
+    @ApiResponse({ status: 201, description: 'Farmer created successfully', type: Farmer })
     @ApiResponse({ status: 400, description: 'Invalid input data' })
     @ApiResponse({ status: 409, description: 'Conflict with external dependencies' })
     async createFarmer(@Body() createFarmerDto: CreateFarmerDto): Promise<Farmer> {
@@ -29,7 +29,7 @@ export class FarmerController {
 
     @Put(':id')
     @ApiOperation({ summary: 'Update farmer' })
-    @ApiResponse({ status: 200, description: 'Farmer updated successfully' })
+    @ApiResponse({ status: 200, description: 'Farmer updated successfully', type: Farmer })
     @ApiResponse({ status: 400, description: 'Invalid input data' })
     @ApiResponse({ status: 404, description: 'Resource not found' })
     async updateFarmer(@Param('id') id: string, @Body() updateFarmerDto: UpdateFarmerDto): Promise<Farmer> {
