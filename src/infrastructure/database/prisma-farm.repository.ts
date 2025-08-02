@@ -58,4 +58,18 @@ export class PrismaFarmRepository implements FarmRepository {
     async delete(id: string): Promise<void> {
         await this.prisma.farm.delete({ where: { id } })
     }
+
+    async countAllFarms(): Promise<number> {
+        return this.prisma.farm.count()
+    }
+
+    async sumFarmsTotalAreaHa(): Promise<number> {
+        const result = await this.prisma.farm.aggregate({
+            _sum: {
+                total_area_ha: true
+            }
+        })
+
+        return Number(result._sum.total_area_ha) ?? 0
+    }
 }

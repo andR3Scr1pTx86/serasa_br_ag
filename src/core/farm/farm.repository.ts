@@ -5,4 +5,6 @@ export interface FarmRepository {
     create(farm: Farm): Promise<Farm>
     update(farm: Farm): Promise<Farm>
     delete(id: string): Promise<void>
+    countAllFarms(): Promise<number>
+    sumFarmsTotalAreaHa(): Promise<number>
 }
