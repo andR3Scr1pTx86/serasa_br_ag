@@ -1,6 +1,7 @@
 services:
     serasa_br_ag:
         build: .
+        container_name: serasa_br_ag
         ports:
             - '3000:3000'
         environment:
@@ -13,6 +14,7 @@ services:
             - ./src:/usr/src/app/src
     serasa_br_ag_db:
         image: postgres:14.18
+        container_name: serasa_br_ag_db
         restart: always
         ports:
             - "5432:5432"
