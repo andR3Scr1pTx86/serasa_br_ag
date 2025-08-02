@@ -5,7 +5,7 @@ import { cpf, cnpj } from 'cpf-cnpj-validator'
 
 export class Farmer {
 
-    @ApiProperty({ description: 'Farmer identification (uuid v4)', default: 'ce3de7b6-0f16-42f5-af5e-71d6753d671d' })
+    @ApiProperty({ description: 'Farmer identification (uuid v4)', default: '6e48d470-bb8c-49ba-9812-3f4e8d85b0ca' })
     public id: string
 
     @ApiProperty({ description: 'Farmer document (cpf|cnpj)', default: '65284820045', examples: ['65284820045', '70818219000188'] })

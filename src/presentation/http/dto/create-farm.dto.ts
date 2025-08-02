@@ -33,7 +33,7 @@ export class CreateFarmDto {
     @IsNotEmpty()
     total_vegetation_area_ha: number;
 
-    @ApiProperty({ description: 'Farmer identification (uuid v4)', default: 'c9ca4e65-bc14-4430-ba58-520c7916b4d9' })
+    @ApiProperty({ description: 'Farmer identification (uuid v4)', default: '6e48d470-bb8c-49ba-9812-3f4e8d85b0ca' })
     @IsUUID(4)
     @IsNotEmpty()
     farmer_id: string;

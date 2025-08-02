@@ -14,7 +14,7 @@ export class CreateCropDto {
     @IsNotEmpty()
     planted_crop: string;
 
-    @ApiProperty({ description: 'Farm identification (uuid v4)', default: 'a64eefca-974b-45c5-a15a-41b2333ce884' })
+    @ApiProperty({ description: 'Farm identification (uuid v4)', default: 'ce3de7b6-0f16-42f5-af5e-71d6753d671d' })
     @IsUUID(4)
     @IsNotEmpty()
     farm_id: string;
