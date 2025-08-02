@@ -2,6 +2,7 @@ import { Inject, Injectable, ServiceUnavailableException } from "@nestjs/common"
 
 import { FARM_REPOSITORY_TOKEN } from "@core/farm/farm.constants";
 import { FarmRepository } from "@core/farm/farm.repository";
+import { HealthStatus } from "@core/types/health.types";
 
 @Injectable()
 export class HealthService {
@@ -10,7 +11,7 @@ export class HealthService {
         private readonly farmRepository: FarmRepository
     ) { }
 
-    async check(): Promise<{ status: string, database: string }> {
+    async check(): Promise<HealthStatus> {
         try {
             await this.farmRepository.countAllFarms()
             return { status: 'ok', database: 'ok' }

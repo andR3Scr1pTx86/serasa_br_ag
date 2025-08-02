@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 
 import { FarmRepository } from "@core/farm/farm.repository";
 import { FARM_REPOSITORY_TOKEN } from "@core/farm/farm.constants";
+import { DashboardData } from "@core/types/dashboard.types";
 
 @Injectable()
 export class DashboardService {
@@ -10,7 +11,7 @@ export class DashboardService {
         private readonly farmRepository: FarmRepository
     ) { }
 
-    async getDashboardData(): Promise<{ total_farms: number, total_farms_area_ha: number }> {
+    async getDashboardData(): Promise<DashboardData> {
         const [total_farms, total_farms_area_ha] = await Promise.all([
             this.farmRepository.countAllFarms(),
             this.farmRepository.sumFarmsTotalAreaHa()
