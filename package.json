@@ -22,7 +22,7 @@
     "db:test:down": "docker-compose -f docker-compose.test.yml down -v",
     "pretest": "npm run db:test:up",
     "posttest": "npm run db:test:down",
-    "prisma:test:migrate": "dotenv -e .env.test -- npx prisma migrate dev --name init --schema prisma/schema.prisma"
+    "prisma:test:migrate": "node run-prisma-test-migrate.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -49,6 +49,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.10.7",
     "@types/supertest": "^6.0.2",
+    "dotenv": "^17.2.1",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
