@@ -3,7 +3,7 @@ import { Injectable } from "@nestjs/common";
 import { CropRepository } from "@core/crop/crop.repository";
 import { Crop } from "@core/crop/crop";
 
-import { PrismaService } from "@prisma/prisma.service";
+import { PrismaService } from "@prisma_mng/prisma.service";
 
 @Injectable()
 export class PrismaCropRepository implements CropRepository {

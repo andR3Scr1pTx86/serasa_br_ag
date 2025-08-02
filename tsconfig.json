@@ -22,7 +22,7 @@
       "@module/*": ["src/module/*"],
       "@presentation/*": ["src/presentation/*"],
       "@infrastructure/*": ["src/infrastructure/*"],
-      "@prisma/*": ["./prisma/*"]
+      "@prisma_mng/*": ["./prisma/*"]
     }
   },
   "watchOptions": {

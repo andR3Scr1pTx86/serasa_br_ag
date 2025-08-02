@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 
-import { PrismaModule } from "@prisma/prisma.module";
+import { PrismaModule } from "@prisma_mng/prisma.module";
 
 import { FARM_REPOSITORY_TOKEN } from "@core/farm/farm.constants";
 import { HealthService } from "@core/health/health.service";
