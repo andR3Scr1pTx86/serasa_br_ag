@@ -5,10 +5,11 @@ import { AppService } from './app.service';
 
 import { FarmerModule } from '@module/farmer/farmer.module';
 import { FarmModule } from '@module/farm/farm.module';
+import { CropModule } from '@module/crop/crop.module';
 
 @Module({
-  imports: [FarmerModule, FarmModule],
+  imports: [FarmerModule, FarmModule, CropModule],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }

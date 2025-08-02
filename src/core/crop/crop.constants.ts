@@ -1,0 +1,1 @@
+export const CROP_REPOSITORY_TOKEN = 'CropRepository';

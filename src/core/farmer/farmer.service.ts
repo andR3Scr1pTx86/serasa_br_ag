@@ -14,9 +14,7 @@ export class FarmerService {
     ) { }
 
     async createFarmer(farmer: Farmer): Promise<Farmer> {
-        const { document } = farmer
-
-        const farmerExists = await this.farmerRepository.findByDocument(document)
+        const farmerExists = await this.farmerRepository.findByDocument(farmer.document)
 
         if (farmerExists) {
             throw new ConflictException("Farmer already exists")

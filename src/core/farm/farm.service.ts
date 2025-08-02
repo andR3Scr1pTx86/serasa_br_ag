@@ -21,7 +21,7 @@ export class FarmService {
         const farmerExists = await this.farmerRepository.findById(farm.farmer_id)
 
         if (!farmerExists) {
-            throw new NotFoundException("Farmer already not exists")
+            throw new NotFoundException("Farmer already exists")
         }
 
         return this.farmRepository.create(farm)
