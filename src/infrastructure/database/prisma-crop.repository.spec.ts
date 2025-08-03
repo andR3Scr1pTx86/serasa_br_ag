@@ -106,4 +106,15 @@ describe('PrismaCropRepository (Integration)', () => {
         const foundCrop = await cropRepository.findById(createdCrop.id);
         expect(foundCrop).toBeNull();
     });
+
+    it('should count all farms by planted crop existing in the database', async () => {
+        const cropToCreate = new Crop(uuidv4(), 2025, 'Soja', farmTest.id);
+        const createdCrop = await cropRepository.create(cropToCreate);
+
+        const countByPlantedCrop = await cropRepository.countAllFarmsByPlantedCrop();
+
+        expect(countByPlantedCrop).toEqual({
+            [createdCrop.planted_crop]: 1
+        })
+    });
 })
