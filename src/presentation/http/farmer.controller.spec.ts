@@ -4,10 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { FarmerService } from "@core/farmer/farmer.service";
 import { Farmer } from "@core/farmer/farmer";
+import { ValidationError } from "@core/exceptions/validation-error.exception";
 
 import { FarmerController } from "./farmer.controller"
 import { CreateFarmerDto } from "./dto/create-farmer.dto";
 import { UpdateFarmerDto } from "./dto/update-farmer.dto";
+
 
 const mockFarmerService = {
     createFarmer: jest.fn(),
@@ -58,6 +60,20 @@ describe('FarmerController', () => {
                 document: createdFarmer.document,
                 name: createdFarmer.name
             }))
+        })
+
+        it('should throw ValidationError if the farmer core entity throws a validation error', async () => {
+            await expect(controller.createFarmer({
+                document: '6528482004', // cpf
+                name: 'José'
+            })).rejects.toThrow(ValidationError)
+
+            await expect(controller.createFarmer({
+                document: '523338100001635', // cnpj
+                name: 'José'
+            })).rejects.toThrow(ValidationError)
+
+            expect(mockFarmerService.createFarmer).not.toHaveBeenCalled()
         })
     })
 

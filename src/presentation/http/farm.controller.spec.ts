@@ -4,10 +4,12 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { FarmService } from "@core/farm/farm.service";
 import { Farm } from "@core/farm/farm";
+import { ValidationError } from "@core/exceptions/validation-error.exception";
 
 import { FarmController } from "./farm.controller";
 import { CreateFarmDto } from "./dto/create-farm.dto";
 import { UpdateFarmDto } from "./dto/update-farm.dto";
+
 
 const mockFarmService = {
     createFarm: jest.fn(),
@@ -78,6 +80,20 @@ describe('FarmController', () => {
                 total_vegetation_area_ha: createdFarm.total_vegetation_area_ha,
                 farmer_id: createdFarm.farmer_id
             }))
+        })
+
+        it('should throw ValidationError if the farmer core entity throws a validation error', async () => {
+            await expect(controller.createFarm({
+                name: 'Pedaço de céu',
+                city: 'Candeias',
+                state: 'Minas Gerais',
+                total_area_ha: 96.8,
+                total_arable_area_ha: 78,
+                total_vegetation_area_ha: 20,
+                farmer_id: '6e48d470-bb8c-49ba-9812-3f4e8d85b0ca',
+            })).rejects.toThrow(ValidationError)
+
+            expect(mockFarmService.createFarm).not.toHaveBeenCalled()
         })
     })
 
