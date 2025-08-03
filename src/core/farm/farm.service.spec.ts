@@ -3,12 +3,11 @@ import { NotFoundException } from "@nestjs/common"
 
 import { FARMER_REPOSITORY_TOKEN } from "@core/farmer/farmer.constants"
 import { Farmer } from "@core/farmer/farmer"
+import { UpdateFarmDto } from "@presentation/http/dto/update-farm.dto"
 
 import { FARM_REPOSITORY_TOKEN } from "./farm.constants"
 import { FarmService } from "./farm.service"
 import { Farm } from "./farm"
-import { UpdateFarmDto } from "@presentation/http/dto/update-farm.dto"
-
 
 const mockFarmRepository = {
     findById: jest.fn(),

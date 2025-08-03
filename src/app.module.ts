@@ -17,6 +17,7 @@ import { HealthModule } from '@module/health/health.module';
     FarmModule,
     CropModule,
     DashboardModule,
-    HealthModule]
+    HealthModule
+  ]
 })
 export class AppModule { }

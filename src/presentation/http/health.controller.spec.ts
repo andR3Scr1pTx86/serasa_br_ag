@@ -1,8 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
 
-import { DashboardController } from "./dashboard.controller";
-import { DashboardService } from "@core/dashboard/dashboard.service";
-import { DashboardData } from "@core/types/dashboard.types";
 import { HealthController } from "./health.controller";
 import { HealthService } from "@core/health/health.service";
 import { HealthStatus } from "@core/types/health.types";
