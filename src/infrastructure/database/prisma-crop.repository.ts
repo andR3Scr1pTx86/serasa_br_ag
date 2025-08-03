@@ -45,4 +45,18 @@ export class PrismaCropRepository implements CropRepository {
     async delete(id: string): Promise<void> {
         await this.prisma.crop.delete({ where: { id } })
     }
+
+    async countAllFarmsByPlantedCrop(): Promise<Record<string, number>> {
+        const countByPlantedCrop = await this.prisma.crop.groupBy({
+            by: ['planted_crop'],
+            _count: {
+                farm_id: true
+            }
+        })
+
+        return countByPlantedCrop.reduce((accumulator, current) => {
+            accumulator[current.planted_crop] = current._count.farm_id
+            return accumulator
+        }, {})
+    }
 }

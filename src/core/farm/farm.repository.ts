@@ -6,5 +6,8 @@ export interface FarmRepository {
     update(farm: Farm): Promise<Farm>
     delete(id: string): Promise<void>
     countAllFarms(): Promise<number>
+    countAllFarmsByState(): Promise<Record<string, number>>
     sumFarmsTotalAreaHa(): Promise<number>
+    sumFarmsTotalArableAreaHa(): Promise<number>
+    sumFarmsTotalVegetationAreaHa(): Promise<number>
 }

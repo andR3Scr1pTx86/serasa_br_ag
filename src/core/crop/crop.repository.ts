@@ -5,4 +5,5 @@ export interface CropRepository {
     create(crop: Crop): Promise<Crop>
     update(crop: Crop): Promise<Crop>
     delete(id: string): Promise<void>
+    countAllFarmsByPlantedCrop(): Promise<Record<string, number>>
 }

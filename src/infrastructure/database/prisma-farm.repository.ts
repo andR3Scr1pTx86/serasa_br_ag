@@ -63,6 +63,20 @@ export class PrismaFarmRepository implements FarmRepository {
         return this.prisma.farm.count()
     }
 
+    async countAllFarmsByState(): Promise<Record<string, number>> {
+        const countByState = await this.prisma.farm.groupBy({
+            by: ['state'],
+            _count: {
+                id: true
+            }
+        })
+
+        return countByState.reduce((accumulator, current) => {
+            accumulator[current.state] = current._count.id
+            return accumulator
+        }, {})
+    }
+
     async sumFarmsTotalAreaHa(): Promise<number> {
         const result = await this.prisma.farm.aggregate({
             _sum: {
@@ -71,5 +85,25 @@ export class PrismaFarmRepository implements FarmRepository {
         })
 
         return Number(result._sum.total_area_ha) ?? 0
+    }
+
+    async sumFarmsTotalArableAreaHa(): Promise<number> {
+        const result = await this.prisma.farm.aggregate({
+            _sum: {
+                total_arable_area_ha: true
+            }
+        })
+
+        return Number(result._sum.total_arable_area_ha) ?? 0
+    }
+
+    async sumFarmsTotalVegetationAreaHa(): Promise<number> {
+        const result = await this.prisma.farm.aggregate({
+            _sum: {
+                total_vegetation_area_ha: true
+            }
+        })
+
+        return Number(result._sum.total_vegetation_area_ha) ?? 0
     }
 }
