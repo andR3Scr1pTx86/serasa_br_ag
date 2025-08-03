@@ -1,0 +1,1 @@
+export const LOGGER_PORT_TOKEN = 'LoggerPort';
