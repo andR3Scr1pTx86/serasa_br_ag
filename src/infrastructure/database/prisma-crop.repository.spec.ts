@@ -5,13 +5,12 @@ import { execSync } from "child_process"
 import { v4 as uuidv4 } from 'uuid';
 
 import { Farm } from "@core/farm/farm";
+import { Farmer } from "@core/farmer/farmer";
+import { Crop } from "@core/crop/crop";
 
 import { PrismaFarmRepository } from "./prisma-farm.repository";
 import { PrismaCropRepository } from "./prisma-crop.repository";
-import { Crop } from "@core/crop/crop";
 import { PrismaFarmerRepository } from "./prisma-farmer.repository";
-import { Farmer } from "@core/farmer/farmer";
-
 
 describe('PrismaCropRepository (Integration)', () => {
     let cropRepository: PrismaCropRepository

@@ -4,8 +4,9 @@ import { PrismaService } from "@prisma_mng/prisma.service"
 import { execSync } from "child_process"
 import { v4 as uuidv4 } from 'uuid';
 
-import { PrismaFarmerRepository } from "./prisma-farmer.repository"
 import { Farmer } from "@core/farmer/farmer"
+
+import { PrismaFarmerRepository } from "./prisma-farmer.repository"
 
 describe('PrismaFarmerRepository (Integration)', () => {
     let repository: PrismaFarmerRepository
