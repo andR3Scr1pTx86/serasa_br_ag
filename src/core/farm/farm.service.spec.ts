@@ -3,6 +3,7 @@ import { NotFoundException } from "@nestjs/common"
 
 import { FARMER_REPOSITORY_TOKEN } from "@core/farmer/farmer.constants"
 import { Farmer } from "@core/farmer/farmer"
+import { LOGGER_PORT_TOKEN } from "@core/logger/logger.constants"
 import { UpdateFarmDto } from "@presentation/http/dto/update-farm.dto"
 
 import { FARM_REPOSITORY_TOKEN } from "./farm.constants"
@@ -15,7 +16,10 @@ const mockFarmRepository = {
     update: jest.fn(),
     delete: jest.fn(),
     countAllFarms: jest.fn(),
-    sumFarmsTotalAreaHa: jest.fn()
+    countAllFarmsByState: jest.fn(),
+    sumFarmsTotalAreaHa: jest.fn(),
+    sumFarmsTotalArableAreaHa: jest.fn(),
+    sumFarmsTotalVegetationAreaHa: jest.fn()
 }
 
 const mockFarmerRepository = {
@@ -25,6 +29,13 @@ const mockFarmerRepository = {
     create: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
+}
+
+const mockLoggerPort = {
+    info: jest.fn(),
+    error: jest.fn(),
+    warn: jest.fn(),
+    debug: jest.fn(),
 }
 
 describe('FarmService', () => {
@@ -41,6 +52,10 @@ describe('FarmService', () => {
                 {
                     provide: FARMER_REPOSITORY_TOKEN,
                     useValue: mockFarmerRepository
+                },
+                {
+                    provide: LOGGER_PORT_TOKEN,
+                    useValue: mockLoggerPort
                 }
             ]
         }).compile()

@@ -2,9 +2,9 @@ import { Test, TestingModule } from "@nestjs/testing"
 import { ServiceUnavailableException } from "@nestjs/common"
 
 import { FARM_REPOSITORY_TOKEN } from "@core/farm/farm.constants"
+import { LOGGER_PORT_TOKEN } from "@core/logger/logger.constants"
 
 import { HealthService } from "./health.service"
-
 
 const mockFarmRepository = {
     findById: jest.fn(),
@@ -12,7 +12,17 @@ const mockFarmRepository = {
     update: jest.fn(),
     delete: jest.fn(),
     countAllFarms: jest.fn(),
-    sumFarmsTotalAreaHa: jest.fn()
+    countAllFarmsByState: jest.fn(),
+    sumFarmsTotalAreaHa: jest.fn(),
+    sumFarmsTotalArableAreaHa: jest.fn(),
+    sumFarmsTotalVegetationAreaHa: jest.fn()
+}
+
+const mockLoggerPort = {
+    info: jest.fn(),
+    error: jest.fn(),
+    warn: jest.fn(),
+    debug: jest.fn(),
 }
 
 describe('HealthService', () => {
@@ -25,6 +35,10 @@ describe('HealthService', () => {
                 {
                     provide: FARM_REPOSITORY_TOKEN,
                     useValue: mockFarmRepository
+                },
+                {
+                    provide: LOGGER_PORT_TOKEN,
+                    useValue: mockLoggerPort
                 }
             ]
         }).compile()

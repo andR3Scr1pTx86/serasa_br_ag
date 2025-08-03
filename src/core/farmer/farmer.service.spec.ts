@@ -1,6 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing"
 import { ConflictException, NotFoundException } from "@nestjs/common"
 
+import { LOGGER_PORT_TOKEN } from "@core/logger/logger.constants"
 import { UpdateFarmerDto } from "@presentation/http/dto/update-farmer.dto"
 
 import { FARMER_REPOSITORY_TOKEN } from "./farmer.constants"
@@ -16,6 +17,13 @@ const mockFarmerRepository = {
     delete: jest.fn()
 }
 
+const mockLoggerPort = {
+    info: jest.fn(),
+    error: jest.fn(),
+    warn: jest.fn(),
+    debug: jest.fn(),
+}
+
 describe('FarmerService', () => {
     let service: FarmerService
 
@@ -26,6 +34,10 @@ describe('FarmerService', () => {
                 {
                     provide: FARMER_REPOSITORY_TOKEN,
                     useValue: mockFarmerRepository
+                },
+                {
+                    provide: LOGGER_PORT_TOKEN,
+                    useValue: mockLoggerPort
                 }
             ]
         }).compile()
