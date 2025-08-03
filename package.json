@@ -87,6 +87,7 @@
       "^@module/(.*)$": "<rootDir>/module/$1",
       "^@presentation/(.*)$": "<rootDir>/presentation/$1",
       "^@infrastructure/(.*)$": "<rootDir>/infrastructure/$1",
+      "^@common/(.*)$": "<rootDir>/common/$1",
       "^@prisma_mng/(.*)$": "<rootDir>/../prisma/$1"
     }
   }

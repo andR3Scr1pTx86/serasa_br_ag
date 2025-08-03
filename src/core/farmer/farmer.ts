@@ -1,7 +1,8 @@
-import { BadRequestException } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
 
 import { cpf, cnpj } from 'cpf-cnpj-validator'
+
+import { ValidationError } from "@core/exceptions/validation-error.exception";
 
 export class Farmer {
 
@@ -24,7 +25,7 @@ export class Farmer {
         this.name = name
 
         if (this.document && !this.isValidDocument(this.document)) {
-            throw new BadRequestException('Invalid document');
+            throw new ValidationError('Invalid document');
         }
     }
 

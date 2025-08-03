@@ -22,6 +22,7 @@
       "@module/*": ["src/module/*"],
       "@presentation/*": ["src/presentation/*"],
       "@infrastructure/*": ["src/infrastructure/*"],
+      "@common/*": ["src/common/*"],
       "@prisma_mng/*": ["./prisma/*"]
     }
   },

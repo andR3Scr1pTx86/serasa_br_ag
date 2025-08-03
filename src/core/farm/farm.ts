@@ -1,5 +1,6 @@
-import { BadRequestException } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
+
+import { ValidationError } from "@core/exceptions/validation-error.exception";
 
 export class Farm {
 
@@ -50,7 +51,7 @@ export class Farm {
             (this.total_area_ha && this.total_arable_area_ha && this.total_vegetation_area_ha) &&
             !this.isValidArea(this.total_area_ha, this.total_arable_area_ha, this.total_vegetation_area_ha)
         ) {
-            throw new BadRequestException('Invalid area');
+            throw new ValidationError('Invalid area');
         }
     }
 

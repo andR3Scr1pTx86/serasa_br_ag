@@ -1,9 +1,14 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+import { ValidationErrorFilter } from '@common/exception-filters/http-exception.filter';
+
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  app.useGlobalFilters(new ValidationErrorFilter());
 
   const swagger_config = new DocumentBuilder()
     .setTitle('Brain Ag - API')
