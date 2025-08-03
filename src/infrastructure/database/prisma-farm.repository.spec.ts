@@ -116,4 +116,33 @@ describe('PrismaFarmRepository (Integration)', () => {
         expect(result).toBe(96.8);
     });
 
+    it('should count all farms by state existing in the database', async () => {
+        const farmToCreate = new Farm(uuidv4(), 'Pedaço de céu', 'Candeias', 'Minas Gerais', 96.8, 77.4, 19.36, farmerUser.id);
+        const createdFarm = await farmRepository.create(farmToCreate);
+
+        const countByState = await farmRepository.countAllFarmsByState();
+
+        expect(countByState).toEqual({
+            [createdFarm.state]: 1
+        })
+    });
+
+    it('should correctly sum the total arable area of existing farms', async () => {
+        const farmToCreate = new Farm(uuidv4(), 'Pedaço de céu', 'Candeias', 'Minas Gerais', 96.8, 77.4, 19.36, farmerUser.id)
+        await farmRepository.create(farmToCreate);
+
+        const result = await farmRepository.sumFarmsTotalArableAreaHa();
+
+        expect(result).toBe(77.4);
+    });
+
+    it('should correctly sum the total vegetation area of existing farms', async () => {
+        const farmToCreate = new Farm(uuidv4(), 'Pedaço de céu', 'Candeias', 'Minas Gerais', 96.8, 77.4, 19.36, farmerUser.id)
+        await farmRepository.create(farmToCreate);
+
+        const result = await farmRepository.sumFarmsTotalVegetationAreaHa();
+
+        expect(result).toBe(19.36);
+    });
+
 })
