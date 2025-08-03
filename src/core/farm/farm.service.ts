@@ -7,10 +7,14 @@ import { UpdateFarmDto } from "@presentation/http/dto/update-farm.dto";
 
 import { FarmRepository } from "./farm.repository";
 import { Farm } from "./farm";
+import { LOGGER_PORT_TOKEN } from "@core/logger/logger.constants";
+import { NestjsLoggerAdapter } from "@infrastructure/logger/nestjs-logger.adapter";
 
 @Injectable()
 export class FarmService {
     constructor(
+        @Inject(LOGGER_PORT_TOKEN)
+        private readonly nestjsLoggerAdapter: NestjsLoggerAdapter,
         @Inject(FARM_REPOSITORY_TOKEN)
         private readonly farmRepository: FarmRepository,
         @Inject(FARMER_REPOSITORY_TOKEN)
@@ -18,23 +22,35 @@ export class FarmService {
     ) { }
 
     async createFarm(farm: Farm): Promise<Farm> {
+        this.nestjsLoggerAdapter.info('FarmService - createFarm', `Starting farm creation for the farmer "${farm.farmer_id}"`)
+
         const farmerExists = await this.farmerRepository.findById(farm.farmer_id)
 
         if (!farmerExists) {
+            this.nestjsLoggerAdapter.warn('FarmService - createFarm', `Farmer with the identification "${farm.farmer_id}" already not exists`)
+
             throw new NotFoundException("Farmer already not exists")
         }
 
-        return this.farmRepository.create(farm)
+        const newFarm = await this.farmRepository.create(farm)
+
+        this.nestjsLoggerAdapter.info('FarmService - createFarm', `Farm for the farmer ${farm.farmer_id} created successfully`)
+
+        return newFarm
     }
 
     async updateFarm(id: string, farm: UpdateFarmDto): Promise<Farm> {
+        this.nestjsLoggerAdapter.info('FarmService - updateFarm', `Starting farm update for "${id} identification"`)
+
         const farmExists = await this.farmRepository.findById(id)
 
         if (!farmExists) {
+            this.nestjsLoggerAdapter.warn('FarmService - updateFarm', `Farm with identification "${id}" already not exists`)
+
             throw new NotFoundException("Farm already not exists")
         }
 
-        return this.farmRepository.update(new Farm(
+        const updatedFarm = await this.farmRepository.update(new Farm(
             farmExists.id,
             farm.name ?? farmExists.name,
             farm.city ?? farmExists.city,
@@ -44,15 +60,25 @@ export class FarmService {
             farm.total_vegetation_area_ha ?? farmExists.total_vegetation_area_ha,
             farmExists.farmer_id,
         ))
+
+        this.nestjsLoggerAdapter.info('FarmService - updateFarm', `Farm with identification ${id} updated successfully`)
+
+        return updatedFarm
     }
 
     async deleteFarm(id: string): Promise<void> {
+        this.nestjsLoggerAdapter.info('FarmService - deleteFarm', `Starting farm deletion for "${id} identification"`)
+
         const farmExists = await this.farmRepository.findById(id)
 
         if (!farmExists) {
+            this.nestjsLoggerAdapter.warn('FarmService - deleteFarm', `Farm with identification "${id}" already not exists`)
+
             throw new NotFoundException("Farm already not exists")
         }
 
-        return this.farmRepository.delete(id)
+        await this.farmRepository.delete(id)
+
+        this.nestjsLoggerAdapter.info('FarmService - deleteFarm', `Farm with identification ${id} deleted successfully`)
     }
 }
