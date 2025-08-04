@@ -10,11 +10,12 @@ import { FarmerController } from "./farmer.controller"
 import { CreateFarmerDto } from "./dto/create-farmer.dto";
 import { UpdateFarmerDto } from "./dto/update-farmer.dto";
 
-
 const mockFarmerService = {
     createFarmer: jest.fn(),
     updateFarmer: jest.fn(),
-    deleteFarmer: jest.fn()
+    deleteFarmer: jest.fn(),
+    getFarmers: jest.fn(),
+    getFarmerById: jest.fn()
 };
 
 describe('FarmerController', () => {
@@ -106,6 +107,34 @@ describe('FarmerController', () => {
             expect(result).toBe(undefined)
 
             expect(mockFarmerService.deleteFarmer).toHaveBeenCalledWith(farmerId);
+        })
+    })
+
+    describe('getFarmers', () => {
+        it('should call getFarmers from farmer service and get all farmers', async () => {
+            const farmer = new Farmer(uuidv4(), '22925617000', 'José')
+
+            mockFarmerService.getFarmers.mockResolvedValue([farmer])
+
+            const result = await controller.getFarmers()
+
+            expect(result).toEqual(expect.arrayContaining([farmer]))
+
+            expect(mockFarmerService.getFarmers).toHaveBeenCalled();
+        })
+    })
+
+    describe('getFarmer', () => {
+        it('should call getFarmerById from farmer service and get farmer by id', async () => {
+            const farmer = new Farmer(uuidv4(), '22925617000', 'José')
+
+            mockFarmerService.getFarmerById.mockResolvedValue(farmer)
+
+            const result = await controller.getFarmer(farmer.id)
+
+            expect(result).toEqual(farmer)
+
+            expect(mockFarmerService.getFarmerById).toHaveBeenCalledWith(farmer.id);
         })
     })
 

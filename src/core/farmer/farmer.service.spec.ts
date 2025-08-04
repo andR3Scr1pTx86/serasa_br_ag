@@ -152,4 +152,58 @@ describe('FarmerService', () => {
             expect(mockFarmerRepository.delete).not.toHaveBeenCalled()
         })
     })
+
+    describe('getFarmers', () => {
+        it('should get all farmers successfully', async () => {
+            const farmer = new Farmer(
+                '6e48d470-bb8c-49ba-9812-3f4e8d85b0ca',
+                '65284820045',
+                'José'
+            )
+
+            mockFarmerRepository.findAll.mockResolvedValue([farmer])
+
+            const result = await service.getFarmers()
+
+            expect(result).toEqual(expect.arrayContaining([farmer]))
+
+            expect(mockFarmerRepository.findAll).toHaveBeenCalled()
+        })
+
+        it('should return empty array if nothing is returned', async () => {
+            mockFarmerRepository.findAll.mockResolvedValue([])
+
+            const result = await service.getFarmers()
+
+            expect(result.length).toBe(0)
+
+            expect(mockFarmerRepository.findAll).toHaveBeenCalled()
+        })
+    })
+
+    describe('getFarmerById', () => {
+        it('should get an existing farmer successfully', async () => {
+            const farmer = new Farmer(
+                '6e48d470-bb8c-49ba-9812-3f4e8d85b0ca',
+                '65284820045',
+                'José'
+            )
+
+            mockFarmerRepository.findById.mockResolvedValue(farmer)
+
+            const result = await service.getFarmerById(farmer.id)
+
+            expect(result).toEqual(farmer)
+
+            expect(mockFarmerRepository.findById).toHaveBeenCalledWith(farmer.id)
+        })
+
+        it('should throw NotFoundException if farmer already not exists', async () => {
+            mockFarmerRepository.findById.mockResolvedValue(null)
+
+            await expect(service.getFarmerById('6e48d470-bb8c-49ba-9812-3f4e8d85b0ca')).rejects.toThrow(NotFoundException)
+
+            expect(mockFarmerRepository.findById).toHaveBeenCalledWith('6e48d470-bb8c-49ba-9812-3f4e8d85b0ca')
+        })
+    })
 })
