@@ -12,7 +12,9 @@ import { UpdateCropDto } from "./dto/update-crop.dto";
 const mockCropService = {
     createCrop: jest.fn(),
     updateCrop: jest.fn(),
-    deleteCrop: jest.fn()
+    deleteCrop: jest.fn(),
+    getCrops: jest.fn(),
+    getCropById: jest.fn()
 };
 
 describe('CropController', () => {
@@ -104,6 +106,40 @@ describe('CropController', () => {
             expect(result).toBe(undefined)
 
             expect(mockCropService.deleteCrop).toHaveBeenCalledWith(cropId);
+        })
+    })
+
+    describe('getCrops', () => {
+        it('should call getCrops from crop service and get all crops', async () => {
+            const crop = new Crop(uuidv4(),
+                2026,
+                'Soja',
+                'ce3de7b6-0f16-42f5-af5e-71d6753d671d')
+
+            mockCropService.getCrops.mockResolvedValue([crop])
+
+            const result = await controller.getCrops()
+
+            expect(result).toEqual(expect.arrayContaining([crop]))
+
+            expect(mockCropService.getCrops).toHaveBeenCalled();
+        })
+    })
+
+    describe('getCrop', () => {
+        it('should call getCropById from crop service and get crop by id', async () => {
+            const crop = new Crop(uuidv4(),
+                2026,
+                'Soja',
+                'ce3de7b6-0f16-42f5-af5e-71d6753d671d')
+
+            mockCropService.getCropById.mockResolvedValue(crop)
+
+            const result = await controller.getCrop(crop.id)
+
+            expect(result).toEqual(crop)
+
+            expect(mockCropService.getCropById).toHaveBeenCalledWith(crop.id);
         })
     })
 

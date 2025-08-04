@@ -12,6 +12,7 @@ import { Crop } from "./crop"
 
 const mockCropRepository = {
     findById: jest.fn(),
+    findAll: jest.fn(),
     create: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
@@ -184,6 +185,62 @@ describe('CropService', () => {
 
             expect(mockCropRepository.findById).toHaveBeenCalledWith('9f83e508-5753-4925-92a1-0b1668ede45b')
             expect(mockCropRepository.delete).not.toHaveBeenCalled()
+        })
+    })
+
+    describe('getFarmers', () => {
+        it('should get all farmers successfully', async () => {
+            const crop = new Crop(
+                '9f83e508-5753-4925-92a1-0b1668ede45b',
+                2025,
+                'Soja',
+                'ce3de7b6-0f16-42f5-af5e-71d6753d671d',
+            )
+
+            mockCropRepository.findAll.mockResolvedValue([crop])
+
+            const result = await service.getCrops()
+
+            expect(result).toEqual(expect.arrayContaining([crop]))
+
+            expect(mockCropRepository.findAll).toHaveBeenCalled()
+        })
+
+        it('should return empty array if nothing is returned', async () => {
+            mockCropRepository.findAll.mockResolvedValue([])
+
+            const result = await service.getCrops()
+
+            expect(result.length).toBe(0)
+
+            expect(mockCropRepository.findAll).toHaveBeenCalled()
+        })
+    })
+
+    describe('getFarmerById', () => {
+        it('should get an existing farmer successfully', async () => {
+            const crop = new Crop(
+                '9f83e508-5753-4925-92a1-0b1668ede45b',
+                2025,
+                'Soja',
+                'ce3de7b6-0f16-42f5-af5e-71d6753d671d',
+            )
+
+            mockCropRepository.findById.mockResolvedValue(crop)
+
+            const result = await service.getCropById(crop.id)
+
+            expect(result).toEqual(crop)
+
+            expect(mockCropRepository.findById).toHaveBeenCalledWith(crop.id)
+        })
+
+        it('should throw NotFoundException if farmer already not exists', async () => {
+            mockCropRepository.findById.mockResolvedValue(null)
+
+            await expect(service.getCropById('6e48d470-bb8c-49ba-9812-3f4e8d85b0ca')).rejects.toThrow(NotFoundException)
+
+            expect(mockCropRepository.findById).toHaveBeenCalledWith('6e48d470-bb8c-49ba-9812-3f4e8d85b0ca')
         })
     })
 })

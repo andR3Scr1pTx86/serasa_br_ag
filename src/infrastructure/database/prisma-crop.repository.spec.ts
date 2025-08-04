@@ -74,6 +74,19 @@ describe('PrismaCropRepository (Integration)', () => {
         expect(foundCrop).toBeNull()
     });
 
+    it('should find all existing crops in the database', async () => {
+        const cropToCreate = new Crop(uuidv4(), 2025, 'Soja', farmTest.id);
+        const createdCrop = await cropRepository.create(cropToCreate);
+
+        const foundFarmers = await cropRepository.findAll();
+        expect(foundFarmers).toEqual([createdCrop]);
+    });
+
+    it('should not find all existing crop in the database and return empty array', async () => {
+        const foundCrops = await cropRepository.findAll();
+        expect(foundCrops).toHaveLength(0)
+    });
+
     it('should create a crop in the database', async () => {
         const cropToCreate = new Crop(uuidv4(), 2025, 'Soja', farmTest.id);
 
