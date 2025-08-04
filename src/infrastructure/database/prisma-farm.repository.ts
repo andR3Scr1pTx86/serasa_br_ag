@@ -84,7 +84,7 @@ export class PrismaFarmRepository implements FarmRepository {
             }
         })
 
-        return Number(result._sum.total_area_ha) ?? 0
+        return Number(result._sum.total_area_ha?.toFixed(2)) ?? 0
     }
 
     async sumFarmsTotalArableAreaHa(): Promise<number> {
@@ -94,7 +94,7 @@ export class PrismaFarmRepository implements FarmRepository {
             }
         })
 
-        return Number(result._sum.total_arable_area_ha) ?? 0
+        return Number(result._sum.total_arable_area_ha?.toFixed(2)) ?? 0
     }
 
     async sumFarmsTotalVegetationAreaHa(): Promise<number> {
@@ -104,6 +104,6 @@ export class PrismaFarmRepository implements FarmRepository {
             }
         })
 
-        return Number(result._sum.total_vegetation_area_ha) ?? 0
+        return Number(result._sum.total_vegetation_area_ha?.toFixed(2)) ?? 0
     }
 }
