@@ -77,4 +77,30 @@ export class CropService {
 
         this.nestjsLoggerAdapter.info('CropService - deleteCrop', `Crop with identification ${id} deleted successfully`)
     }
+
+    async getCrops(): Promise<Crop[]> {
+        this.nestjsLoggerAdapter.info('CropService - getCrops', "Starting getting all crops")
+
+        const crops = await this.cropRepository.findAll()
+
+        this.nestjsLoggerAdapter.info('CropService - getCrops', "Crops returned successfully")
+
+        return crops
+    }
+
+    async getCropById(id: string): Promise<Crop> {
+        this.nestjsLoggerAdapter.info('CropService - getCropById', `Starting getting crop for "${id} identification"`)
+
+        const cropExists = await this.cropRepository.findById(id)
+
+        if (!cropExists) {
+            this.nestjsLoggerAdapter.warn('CropService - getCropById', `Crop with identification "${id}" already not exists`)
+
+            throw new NotFoundException("Crop already not exists")
+        }
+
+        this.nestjsLoggerAdapter.info('CropService - getCropById', `Crop with identification ${id} found successfully`)
+
+        return cropExists
+    }
 }

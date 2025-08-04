@@ -20,6 +20,17 @@ export class PrismaCropRepository implements CropRepository {
         )
     }
 
+    async findAll(): Promise<Crop[]> {
+        const crops = await this.prisma.crop.findMany()
+
+        return crops.map(crop => new Crop(
+            crop.id,
+            crop.crop_yr,
+            crop.planted_crop,
+            crop.farm_id
+        ))
+    }
+
     async create(crop: Crop): Promise<Crop> {
         const newCrop = await this.prisma.crop.create({ data: crop })
 
