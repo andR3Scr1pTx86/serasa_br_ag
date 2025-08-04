@@ -25,6 +25,21 @@ export class PrismaFarmRepository implements FarmRepository {
         )
     }
 
+    async findAll(): Promise<Farm[]> {
+        const farms = await this.prisma.farm.findMany()
+
+        return farms.map(farm => new Farm(
+            farm.id,
+            farm.name,
+            farm.city,
+            farm.state,
+            Number(farm.total_area_ha),
+            Number(farm.total_arable_area_ha),
+            Number(farm.total_vegetation_area_ha),
+            farm.farmer_id
+        ))
+    }
+
     async create(farm: Farm): Promise<Farm> {
         const newFarm = await this.prisma.farm.create({ data: farm })
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 
 import { v4 as uuidv4 } from 'uuid';
@@ -9,7 +9,7 @@ import { Farm } from "@core/farm/farm";
 import { CreateFarmDto } from "./dto/create-farm.dto";
 import { UpdateFarmDto } from "./dto/update-farm.dto";
 
-@ApiTags('farm')
+@ApiTags('Farm')
 @Controller('farm')
 export class FarmController {
     constructor(private readonly farmService: FarmService) { }
@@ -47,5 +47,20 @@ export class FarmController {
     @ApiResponse({ status: 404, description: 'Resource not found' })
     async deleteFarm(@Param('id') id: string): Promise<void> {
         return this.farmService.deleteFarm(id)
+    }
+
+    @Get()
+    @ApiOperation({ summary: 'Get all farms' })
+    @ApiResponse({ status: 200, description: 'Farms returned successfully' })
+    async getFarms(): Promise<Farm[]> {
+        return this.farmService.getFarms()
+    }
+
+    @Get(':id')
+    @ApiOperation({ summary: 'Get farm by id' })
+    @ApiResponse({ status: 200, description: 'Farm returned successfully' })
+    @ApiResponse({ status: 404, description: 'Resource not found' })
+    async getFarm(@Param('id') id: string): Promise<Farm> {
+        return this.farmService.getFarmById(id)
     }
 }

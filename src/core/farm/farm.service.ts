@@ -81,4 +81,30 @@ export class FarmService {
 
         this.nestjsLoggerAdapter.info('FarmService - deleteFarm', `Farm with identification ${id} deleted successfully`)
     }
+
+    async getFarms(): Promise<Farm[]> {
+        this.nestjsLoggerAdapter.info('FarmService - getFarms', "Starting getting all farms")
+
+        const farms = await this.farmRepository.findAll()
+
+        this.nestjsLoggerAdapter.info('FarmService - getFarms', "Farms returned successfully")
+
+        return farms
+    }
+
+    async getFarmById(id: string): Promise<Farm> {
+        this.nestjsLoggerAdapter.info('FarmService - getFarmById', `Starting getting farm for "${id} identification"`)
+
+        const farmExists = await this.farmRepository.findById(id)
+
+        if (!farmExists) {
+            this.nestjsLoggerAdapter.warn('FarmService - getFarmById', `Farm with identification "${id}" already not exists`)
+
+            throw new NotFoundException("Farm already not exists")
+        }
+
+        this.nestjsLoggerAdapter.info('FarmService - getFarmById', `Farm with identification ${id} found successfully`)
+
+        return farmExists
+    }
 }
