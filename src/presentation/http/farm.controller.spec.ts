@@ -14,7 +14,9 @@ import { UpdateFarmDto } from "./dto/update-farm.dto";
 const mockFarmService = {
     createFarm: jest.fn(),
     updateFarm: jest.fn(),
-    deleteFarm: jest.fn()
+    deleteFarm: jest.fn(),
+    getFarms: jest.fn(),
+    getFarmById: jest.fn()
 };
 
 describe('FarmController', () => {
@@ -136,6 +138,48 @@ describe('FarmController', () => {
             expect(result).toBe(undefined)
 
             expect(mockFarmService.deleteFarm).toHaveBeenCalledWith(farmId);
+        })
+    })
+
+    describe('getFarms', () => {
+        it('should call getFarms from farm service and get all farms', async () => {
+            const farm = new Farm(uuidv4(),
+                'Pedaço da lua',
+                'Candeias',
+                'Minas Gerais',
+                96.8,
+                77.4,
+                19.36,
+                '6e48d470-bb8c-49ba-9812-3f4e8d85b0ca')
+
+            mockFarmService.getFarms.mockResolvedValue([farm])
+
+            const result = await controller.getFarms()
+
+            expect(result).toEqual(expect.arrayContaining([farm]))
+
+            expect(mockFarmService.getFarms).toHaveBeenCalled();
+        })
+    })
+
+    describe('getFarm', () => {
+        it('should call getFarmById from farm service and get farm by id', async () => {
+            const farm = new Farm(uuidv4(),
+                'Pedaço da lua',
+                'Candeias',
+                'Minas Gerais',
+                96.8,
+                77.4,
+                19.36,
+                '6e48d470-bb8c-49ba-9812-3f4e8d85b0ca')
+
+            mockFarmService.getFarmById.mockResolvedValue(farm)
+
+            const result = await controller.getFarm(farm.id)
+
+            expect(result).toEqual(farm)
+
+            expect(mockFarmService.getFarmById).toHaveBeenCalledWith(farm.id);
         })
     })
 

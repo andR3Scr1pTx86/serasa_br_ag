@@ -65,6 +65,19 @@ describe('PrismaFarmRepository (Integration)', () => {
         expect(foundFarm).toBeNull()
     });
 
+    it('should find all existing farms in the database', async () => {
+        const farmToCreate = new Farm(uuidv4(), 'Pedaço de céu', 'Candeias', 'Minas Gerais', 96.8, 77.4, 19.36, farmerUser.id);
+        const createdFarm = await farmRepository.create(farmToCreate);
+
+        const foundFarmers = await farmRepository.findAll();
+        expect(foundFarmers).toEqual([createdFarm]);
+    });
+
+    it('should not find all existing farm in the database and return empty array', async () => {
+        const foundFarms = await farmRepository.findAll();
+        expect(foundFarms).toHaveLength(0)
+    });
+
     it('should create a farm in the database', async () => {
         const farmToCreate = new Farm(uuidv4(), 'Pedaço de céu', 'Candeias', 'Minas Gerais', 96.8, 77.4, 19.36, farmerUser.id);
 

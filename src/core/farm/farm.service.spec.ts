@@ -12,6 +12,7 @@ import { Farm } from "./farm"
 
 const mockFarmRepository = {
     findById: jest.fn(),
+    findAll: jest.fn(),
     create: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
@@ -200,6 +201,70 @@ describe('FarmService', () => {
 
             expect(mockFarmRepository.findById).toHaveBeenCalledWith('ce3de7b6-0f16-42f5-af5e-71d6753d671d')
             expect(mockFarmRepository.delete).not.toHaveBeenCalled()
+        })
+    })
+
+    describe('getFarms', () => {
+        it('should get all farms successfully', async () => {
+            const farm = new Farm(
+                'ce3de7b6-0f16-42f5-af5e-71d6753d671d',
+                'Pedaço de céu',
+                'Candeias',
+                'Minas Gerais',
+                96.8,
+                77.4,
+                19.36,
+                '6e48d470-bb8c-49ba-9812-3f4e8d85b0ca'
+            )
+
+            mockFarmRepository.findAll.mockResolvedValue([farm])
+
+            const result = await service.getFarms()
+
+            expect(result).toEqual(expect.arrayContaining([farm]))
+
+            expect(mockFarmRepository.findAll).toHaveBeenCalled()
+        })
+
+        it('should return empty array if nothing is returned', async () => {
+            mockFarmRepository.findAll.mockResolvedValue([])
+
+            const result = await service.getFarms()
+
+            expect(result.length).toBe(0)
+
+            expect(mockFarmRepository.findAll).toHaveBeenCalled()
+        })
+    })
+
+    describe('getFarmById', () => {
+        it('should get an existing farm successfully', async () => {
+            const farm = new Farm(
+                'ce3de7b6-0f16-42f5-af5e-71d6753d671d',
+                'Pedaço de céu',
+                'Candeias',
+                'Minas Gerais',
+                96.8,
+                77.4,
+                19.36,
+                '6e48d470-bb8c-49ba-9812-3f4e8d85b0ca'
+            )
+
+            mockFarmRepository.findById.mockResolvedValue(farm)
+
+            const result = await service.getFarmById(farm.id)
+
+            expect(result).toEqual(farm)
+
+            expect(mockFarmRepository.findById).toHaveBeenCalledWith(farm.id)
+        })
+
+        it('should throw NotFoundException if farm already not exists', async () => {
+            mockFarmRepository.findById.mockResolvedValue(null)
+
+            await expect(service.getFarmById('6e48d470-bb8c-49ba-9812-3f4e8d85b0ca')).rejects.toThrow(NotFoundException)
+
+            expect(mockFarmRepository.findById).toHaveBeenCalledWith('6e48d470-bb8c-49ba-9812-3f4e8d85b0ca')
         })
     })
 })
