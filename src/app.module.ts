@@ -11,7 +11,7 @@ import { HealthModule } from '@module/health/health.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: '.env.dev'
+      envFilePath: process.env.NODE_ENV === 'dev' ? '.env.dev' : '.env.local'
     }),
     FarmerModule,
     FarmModule,

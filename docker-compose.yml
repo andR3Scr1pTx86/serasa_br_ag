@@ -3,10 +3,11 @@ services:
         build: .
         container_name: serasa_br_ag
         ports:
-            - '3000:3000'
+            - '3001:3000'
         environment:
             - PORT=3000
             - NODE_ENV=dev
+        env_file: .env.dev
         depends_on:
             serasa_br_ag_db:
                 condition: service_healthy
