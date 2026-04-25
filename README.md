@@ -1,55 +1,55 @@
-## Descrição
+## Description
 
-Este projeto backend foi desenvolvido em **NestJS** para gerenciar o cadastro de produtores rurais. A arquitetura está seguindo os princípios da **arquitetura hexagonal** para garantir um padrão de design desacoplado e de fácil manutenção. A aplicação foi pensada sobre o conceito de **monolito modular**, dando abertura para a sua evolução, podendo até ser refatorada para a arquitetura de **microserviços**, caso seja necessário, devido à necessidade de escalar.
+This backend project was developed in **NestJS** to manage the registration of rural producers. The architecture follows the principles of **Hexagonal Architecture** to ensure a decoupled design pattern and easy maintenance. The application was conceived under the **Modular Monolith** concept, allowing for future evolution; it can even be refactored into a **microservices** architecture if necessary due to scaling requirements.
 
-## Tecnologias
+## Technologies
 
 - **Framework**: NestJS
-- **Linguagem**: Typescript
+- **Language**: TypeScript
 - **ORM**: Prisma
-- **Banco de Dados**: PostgreSQL
-- **Containerização**: Docker
-- **Orquestração**: Docker Compose
-- **Documentação**: Swagger/OpenAPI
+- **Database**: PostgreSQL
+- **Containerization**: Docker
+- **Orchestration**: Docker Compose
+- **Documentation**: Swagger/OpenAPI
 
-## Arquitetura
+## Architecture
 
-### Diagrama - Monolito Modular (Arquitetura Hexagonal)
+### Diagram - Modular Monolith (Hexagonal Architecture)
 
-![Diagrama - Arquitetura Hexagonal](assets/brain_ag_modular_arch.png)
+![Diagram - Hexagonal Architecture](assets/brain_ag_modular_arch.png)
 
-### Diagrama - Entidade e Relacionamento
+### Diagram - Entity and Relationship
 
-![Diagrama - Arquitetura Hexagonal](assets/brain_ag_der.png)
+![Diagram - Entity and Relationship](assets/brain_ag_der.png)
 
-## Como executar o projeto
+## How to run the project
 
-Siga os passos abaixo para configurar e rodar a aplicação localmente.
+Follow the steps below to configure and run the application locally.
 
-#### Clone o repositório
+#### Clone the repository
 
 ```bash
 $ git clone git@github.com:andR3Scr1pTx86/serasa_br_ag.git
 ```
-#### Execute o comando do orquestrador
+#### Execute the orchestrator command
 
 ```bash
 $ docker compose -f docker-compose.yml up -d
 
-# Se o comando acima não funcionar, tente usar :
+# If the command above doesn't work, try using :
 
 $ docker-compose -f docker-compose.yml up -d
 ```
 
-#### A aplicação já vai estar executando !!!
+#### The application will already be running !!!
 
-[Acessar interface do usuário](http://localhost:3001/doc)
+[Access user interface](http://localhost:3001/doc)
 
-## Como executar os testes
+## How to run the tests
 
-Neste momento tem que rodar normalmente na sua maquina.
+At this point, it should run normally on your machine.
 
-#### Testes Unitários & Testes de Integração
+#### Unit Tests & Integration Tests
 
 ```bash
 $ npm run test
@@ -57,24 +57,24 @@ $ npm run test
 
 #### Coverage
 
-Para rodar os testes com cobertura, terá de subir o banco de dados de teste
+To run the tests with coverage, you will need to upload the test database.
 
 ```bash
 $ npm run pretest
 ```
 
-Depois de o container subir e o banco de dados estiver executando
+After the container starts up and the database is running
 
 ```bash
 $ npm run test:cov
 ```
 
-Assim que acabar a execução, pode desligar o container
+Once the execution is complete, you can shut down the container.
 
 ```bash
 $ npm run posttest
 ```
 
-## Nota
+## Note
 
-Este projeto foi desenvolvido como parte de um desafio técnico para a vaga de desenvolvedor backend (nodejs) na Serasa Experian (Brain-AG).
+This project was developed as part of a technical challenge for a backend developer (node.js) position at Serasa Experian (Brain-AG).
